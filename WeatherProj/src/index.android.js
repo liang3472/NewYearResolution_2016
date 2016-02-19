@@ -9,16 +9,17 @@ import React, {
   Image,
   StyleSheet,
   ListView,
-  ToastAndroid,
   PanResponder,
   Text,
   View,
   Animated,
 } from 'react-native';
+import LiangToast from './LiangToast';
 
 var WEATHER = 'http://api.map.baidu.com/telematics/v3/weather?location=%E5%8C%97%E4%BA%AC&output=json&ak=8UI6PHtek99nSfQdnoC0Pawf';
 var titlePanResponder = {};
 var itemPanResponder = {};
+//var LiangToast = require('./LiangToast');
 
 class WeatherProj extends Component {
   constructor(props) {
@@ -46,16 +47,16 @@ class WeatherProj extends Component {
         onShouldBlockNativeResponder: (evt, gestureState) => true,
 
         onPanResponderGrant: (evt, gestureState) => {
-          ToastAndroid.show('Title_OnPanResponderGrant', ToastAndroid.SHORT);
+          LiangToast.show('Title_OnPanResponderGrant', LiangToast.SHORT);
         },
         onPanResponderMove: (evt, gestureState) => {
-          // ToastAndroid.show('onPanResponderMove', ToastAndroid.SHORT);
+          // LiangToast.show('onPanResponderMove', LiangToast.SHORT);
         },
         onPanResponderRelease: (evt, gestureState) => {
-          ToastAndroid.show('Title_OnPanResponderRelease', ToastAndroid.SHORT);
+          LiangToast.show('Title_OnPanResponderRelease', LiangToast.SHORT);
         },
         onPanResponderTerminate: (evt, gestureState) => {
-          ToastAndroid.show('Title_OnPanResponderTerminate', ToastAndroid.SHORT);
+          LiangToast.show('Title_OnPanResponderTerminate', LiangToast.SHORT);
         },
       });
       this.itemPanResponder = new PanResponder.create({
@@ -66,16 +67,16 @@ class WeatherProj extends Component {
         onShouldBlockNativeResponder: (evt, gestureState) => true,
 
         onPanResponderGrant: (evt, gestureState) => {
-          ToastAndroid.show('Item_OnPanResponderGrant', ToastAndroid.SHORT);
+          LiangToast.show('Item_OnPanResponderGrant', LiangToast.SHORT);
         },
         onPanResponderMove: (evt, gestureState) => {
-          // ToastAndroid.show('onPanResponderMove', ToastAndroid.SHORT);
+          // LiangToast.show('onPanResponderMove', LiangToast.SHORT);
         },
         onPanResponderRelease: (evt, gestureState) => {
-          ToastAndroid.show('Item_OnPanResponderRelease', ToastAndroid.SHORT);
+          LiangToast.show('Item_OnPanResponderRelease', LiangToast.SHORT);
         },
         onPanResponderTerminate: (evt, gestureState) => {
-          ToastAndroid.show('Item_OnPanResponderTerminate', ToastAndroid.SHORT);
+          LiangToast.show('Item_OnPanResponderTerminate', LiangToast.SHORT);
         },
       });
   }
@@ -112,7 +113,7 @@ class WeatherProj extends Component {
   }
 
   showToast(text){
-    ToastAndroid.show(text, ToastAndroid.SHORT);
+    LiangToast.show(text, LiangToast.SHORT);
   }
 
   renderLoadingView() {

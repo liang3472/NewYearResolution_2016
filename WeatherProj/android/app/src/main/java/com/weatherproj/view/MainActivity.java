@@ -3,7 +3,7 @@ package com.weatherproj.view;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-import com.weatherproj.AnExampleReactPackage;
+import com.weatherproj.reactpackage.LiangReactPackage;
 import com.weatherproj.BuildConfig;
 
 import java.util.Arrays;
@@ -37,7 +37,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-              new AnExampleReactPackage()
+              new LiangReactPackage()
       );
     }
 }
