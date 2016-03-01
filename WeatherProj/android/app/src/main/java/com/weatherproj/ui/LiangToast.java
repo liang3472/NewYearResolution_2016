@@ -1,4 +1,4 @@
-package com.weatherproj;
+package com.weatherproj.ui;
 
 import android.widget.Toast;
 
