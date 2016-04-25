@@ -74,7 +74,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "be74f847-5c29-4dca-b8af-810415cb361b"
+      "__uuid__": "a8fc049f-2610-4c99-a51c-14a391c9d14d"
     },
     "_type": 0,
     "_sizeMode": 2,
@@ -89,7 +89,9 @@
     "_isTrimmedMode": true,
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_atlas": null
+    "_atlas": {
+      "__uuid__": "9ff0ace8-579a-4abb-9786-131086b29a2e"
+    }
   },
   {
     "__type__": "cc.Animation",
@@ -115,7 +117,6 @@
       "__id__": 1
     },
     "_enabled": true,
-    "player": null,
     "radius": 50
   },
   {
@@ -124,6 +125,6 @@
       "__id__": 1
     },
     "asset": null,
-    "fileId": "022f5Vc7GVI47BxhjN9xr+z"
+    "fileId": "12823hEUaVD8KSqXN1tHWWO"
   }
 ]
