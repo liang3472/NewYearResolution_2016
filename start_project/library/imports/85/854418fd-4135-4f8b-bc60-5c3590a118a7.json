@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.SceneAsset",
-    "_name": "",
+    "_name": "game",
     "_objFlags": 0,
     "scene": {
       "__id__": 1
