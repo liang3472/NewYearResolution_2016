@@ -26,14 +26,59 @@ cc.Class({
         gameover: {
             'default': null,
             type: cc.Layout
+        },
+        scoresound: {
+            'default': null,
+            url: cc.AudioClip
+        },
+        bgmsound: {
+            'default': null,
+            url: cc.AudioClip
+        },
+        timelabel: {
+            'default': null,
+            type: cc.Label
+        },
+        scorelabel: {
+            'default': null,
+            type: cc.Label
         }
     },
 
     // use this for initialization
     onLoad: function onLoad() {
+        this.time = 0;
         this.generateStar();
+
+        this.callback = function () {
+            // 这里的 this 指向 component
+            this.countTime();
+        };
+        this.schedule(this.callback, 1);
+        cc.audioEngine.playMusic(this.bgmsound, true);
     },
 
+    /**
+     * 计时
+     */
+    countTime: function countTime() {
+        this.time += 1;
+        this.timelabel.string = 'time:' + this.time;
+    },
+
+    /**
+     * 展示分数
+     */
+    showScore: function showScore() {
+        this.scorelabel.string = 'score:' + this.time;
+        cc.audioEngine.stopMusic(true);
+    },
+
+    stopCountTime: function stopCountTime() {
+        this.unschedule(this.callback);
+    },
+
+    // 生成星星
     generateStar: function generateStar() {
         this.star = cc.instantiate(this.starPrefab);
         this.node.addChild(this.star);

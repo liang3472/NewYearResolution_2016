@@ -1,9 +1,9 @@
 {
   "windows": {
     "main": {
-      "x": 320,
-      "y": 108,
-      "width": 1280,
+      "x": 36,
+      "y": 38,
+      "width": 1244,
       "height": 720,
       "layout": {
         "docks": [
@@ -42,7 +42,7 @@
                   "scene.panel"
                 ],
                 "type": "panel",
-                "width": 768
+                "width": 732
               },
               {
                 "active": 0,
@@ -52,13 +52,13 @@
                   "timeline.panel"
                 ],
                 "type": "panel",
-                "width": 768
+                "width": 732
               }
             ],
             "height": 629,
             "row": false,
             "type": "dock",
-            "width": 768
+            "width": 732
           },
           {
             "active": 0,

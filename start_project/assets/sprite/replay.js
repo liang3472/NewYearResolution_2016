@@ -11,19 +11,24 @@ cc.Class({
         //    readonly: false,    // optional, default is false
         // },
         // ...
-        game:{
+        
+        bgmsound:{
             default: null,
-            type: cc.Node,
-        }
+            url: cc.AudioClip, 
+        },
     },
 
     // use this for initialization
     onLoad: function () {
-
+        cc.audioEngine.playEffect(this.bgmsound, false);
     },
     
+    /**
+     * 触发replay动作
+     */
     replay: function(){
         cc.log("action to replay");
+        cc.audioEngine.stopAllEffects();
         cc.director.loadScene('game');
     },
 

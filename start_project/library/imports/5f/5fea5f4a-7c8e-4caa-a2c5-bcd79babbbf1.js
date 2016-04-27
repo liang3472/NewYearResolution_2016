@@ -9,7 +9,11 @@ cc.Class({
     properties: {
         maxHeight: 0,
         speed: 0,
-        accle: 0
+        accle: 0,
+        jumpsound: {
+            'default': null,
+            url: cc.AudioClip
+        }
     },
 
     // use this for initialization
@@ -32,12 +36,21 @@ cc.Class({
         var long = cc.scaleTo(0.1, 1, 1.2);
         var back = cc.scaleTo(0.1, 1, 1);
 
-        var anim = cc.sequence(short, long, jumpUp, back, jumpDown);
+        var callback = cc.callFunc(this.playJumpSound, this);
+
+        var anim = cc.sequence(callback, short, long, jumpUp, back, jumpDown);
         this.node.runAction(cc.repeatForever(anim));
     },
 
     /**
-     * 设置监听事件
+     * 播放跳跃音效
+     */
+    playJumpSound: function playJumpSound() {
+        cc.audioEngine.playEffect(this.jumpsound, false);
+    },
+
+    /**
+     * 设置按钮监听事件
      * 主要监听左右按键事件
      */
     setListener: function setListener() {
@@ -74,6 +87,7 @@ cc.Class({
             }
         }, this.node);
 
+        // 设置触摸事件
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan: function onTouchBegan(event) {
@@ -126,6 +140,7 @@ cc.Class({
         return this.speed;
     },
 
+    // 停止移动
     stopMove: function stopMove() {
         this.node.stopAllActions();
     }
