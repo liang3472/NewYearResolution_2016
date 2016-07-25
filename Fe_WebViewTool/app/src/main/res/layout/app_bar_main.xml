@@ -22,14 +22,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 >
                 <EditText
+                    android:id="@+id/et_url"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:focusable="false"
                     />
-                <ImageView
+                <Button
+                    android:id="@+id/btn_goto"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/abc_ic_go_search_api_mtrl_alpha"
@@ -47,6 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:src="@android:drawable/ic_dialog_email"
+        android:visibility="gone"
+    />
 
 </android.support.design.widget.CoordinatorLayout>

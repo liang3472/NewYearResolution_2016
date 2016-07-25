@@ -1,8 +1,10 @@
 package com.coderstudio.tomliang.fe_webviewtool;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,8 +14,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.coderstudio.tomliang.fe_webviewtool.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +39,11 @@ public class MainActivity extends AppCompatActivity
     protected Toolbar toolbar;
     @BindView(R.id.wv_content)
     protected WebView wvContent;
+    @BindView(R.id.btn_goto)
+    protected Button btnGoTo;
+    @BindView(R.id.et_url)
+    protected EditText etUrl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +64,39 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        wvContent.loadUrl("http://www.baidu.com");
-        wvContent.setWebViewClient(new WebViewClient(){
+        wvContent.getSettings().setJavaScriptEnabled(true);
+        wvContent.getSettings().setDomStorageEnabled(true);
+        wvContent.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // TODO Auto-generated method stub
-                //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
                 view.loadUrl(url);
                 return true;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+//                view.loadUrl(Utils.getInjectErudaJs());
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+//                view.loadUrl(Utils.getInjectErudaJs());
+            }
+        });
+
+        btnGoTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(etUrl.getText())) {
+                    if (Utils.isUrl(etUrl.getText().toString())) {
+                        wvContent.loadUrl(etUrl.getText().toString());
+                    } else {
+                        Utils.toastMsg(v, "不是一个链接");
+                    }
+                }
             }
         });
 
