@@ -16,7 +16,18 @@ public class main {
 //		selectSort.sort(arr);
 		
 		// ======================插入排序======================
-		InsertSort<Integer> insertSort = new InsertSort<Integer>() {
+//		InsertSort<Integer> insertSort = new InsertSort<Integer>() {
+//			
+//			@Override
+//			public boolean less(Integer t1, Integer t2) {
+//				return t1 < t2;
+//			}
+//		};
+//		
+//		insertSort.sort(arr);
+		
+		// ======================希尔排序======================
+		ShellSort<Integer> shellSort = new ShellSort<Integer>() {
 			
 			@Override
 			public boolean less(Integer t1, Integer t2) {
@@ -24,7 +35,7 @@ public class main {
 			}
 		};
 		
-		insertSort.sort(arr);
+		shellSort.sort(arr);
 		
 		for(int num : arr){
 			System.out.println(num);
