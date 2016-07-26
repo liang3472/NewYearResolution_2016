@@ -12,4 +12,14 @@
         android:id="@+id/wv_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progress="0"
+        android:visibility="visible"
+        android:secondaryProgress="0"
+    />
 </RelativeLayout>
