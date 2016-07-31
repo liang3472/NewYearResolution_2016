@@ -27,18 +27,29 @@ public class main {
 //		insertSort.sort(arr);
 		
 		// ======================希尔排序======================
-		ShellSort<Integer> shellSort = new ShellSort<Integer>() {
+//		ShellSort<Integer> shellSort = new ShellSort<Integer>() {
+//			
+//			@Override
+//			public boolean less(Integer t1, Integer t2) {
+//				return t1 < t2;
+//			}
+//		};
+//		
+//		shellSort.sort(arr);
+		
+		MergeSort<Integer> merge = new MergeSort<Integer>() {
 			
 			@Override
 			public boolean less(Integer t1, Integer t2) {
 				return t1 < t2;
 			}
-		};
+		}; 
 		
-		shellSort.sort(arr);
+		merge.sort(arr);
 		
 		for(int num : arr){
 			System.out.println(num);
 		}
 	}
+
 }
