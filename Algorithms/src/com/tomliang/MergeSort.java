@@ -3,9 +3,10 @@ package com.tomliang;
 /**
  * 
  * @author lianghangbing
- * <p>归并排序</p>
+ * <p>自顶向下原地归并排序</p>
  * <p>排序原理:</p>
  * <p>利用递归思想，将数组拆分成小单元，复制一个数组，将数组分为2部分，左右两部分进行比较，将比较后的元素插入原数组中</p>
+ * <p>时间复杂度: NlogN</p>
  * @param <T>
  */
 public abstract class MergeSort<T> implements ISort<T> {

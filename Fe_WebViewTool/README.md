@@ -8,6 +8,13 @@
 
 3.*提供***eruda.min.js***动态注入webview*
 
+##原理
+1.使用js注入，将eruda.mini.js库动态注入到页面当中。
+
+2.检测浏览器webgl兼容性参考:[Mozilla](https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL)
+
+3.扫码使用zxing
+
 ##Feature
 1.*刷新*
 
