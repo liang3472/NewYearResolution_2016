@@ -24,21 +24,21 @@ public class SpUtils {
         mEditor = mSharedPreferences.edit();
     }
 
-    private static void setDebugEnable(boolean flag){
+    public static void setDebugEnable(boolean flag){
         mEditor.putBoolean(SET_DEBUG, flag);
         mEditor.commit();
     }
 
-    private static boolean isDebugEnable(){
+    public static boolean isDebugEnable(){
         return mSharedPreferences.getBoolean(SET_DEBUG, false);
     }
 
-    private static void setAutoFlush(boolean flag){
+    public static void setAutoFlush(boolean flag){
         mEditor.putBoolean(SET_AUTOFLUSH, flag);
         mEditor.commit();
     }
 
-    private static boolean isAutoFlush(){
+    public static boolean isAutoFlush(){
         return mSharedPreferences.getBoolean(SET_AUTOFLUSH, false);
     }
 }

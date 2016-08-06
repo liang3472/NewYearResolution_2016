@@ -44,10 +44,12 @@ public class Utils {
         StringBuilder sb = new StringBuilder();
         sb.append("javascript:(function () { ");
         for (int i = 0; i < libs.length; i++) {
-            sb.append("var script" + i + " = document.createElement('script');");
-            sb.append("script" + i + ".src=\"" + libs[i].getJsSrc() + "\";");
-            sb.append("script" + i + ".onload = " + libs[i].getJsOnLoad() + ";");
-            sb.append("document.body.appendChild(script" + i + ");");
+            if(libs[i] != null){
+                sb.append("var script" + i + " = document.createElement('script');");
+                sb.append("script" + i + ".src=\"" + libs[i].getJsSrc() + "\";");
+                sb.append("script" + i + ".onload = " + libs[i].getJsOnLoad() + ";");
+                sb.append("document.body.appendChild(script" + i + ");");
+            }
         }
         sb.append("})();");
 

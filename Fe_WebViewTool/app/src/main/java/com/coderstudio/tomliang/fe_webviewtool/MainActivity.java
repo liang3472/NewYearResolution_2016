@@ -1,30 +1,42 @@
 package com.coderstudio.tomliang.fe_webviewtool;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.coderstudio.tomliang.fe_webviewtool.bean.History;
+import com.coderstudio.tomliang.fe_webviewtool.bean.JsLib;
 import com.coderstudio.tomliang.fe_webviewtool.dao.HistoryDao;
 import com.coderstudio.tomliang.fe_webviewtool.itf.HistoryOperationI;
+import com.coderstudio.tomliang.fe_webviewtool.utils.SpUtils;
 import com.coderstudio.tomliang.fe_webviewtool.utils.Utils;
 import com.coderstudio.tomliang.fe_webviewtool.zxing.CaptureActivity;
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.itemanimators.AlphaCrossFadeAnimator;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.List;
 import java.util.Timer;
@@ -33,12 +45,8 @@ import java.util.TimerTask;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, HistoryOperationI {
+        implements HistoryOperationI {
 
-    @BindView(R.id.drawer_layout)
-    protected DrawerLayout drawer;
-    @BindView(R.id.nav_view)
-    protected NavigationView navigationView;
     @BindView(R.id.toolbar)
     protected Toolbar toolbar;
     @BindView(R.id.wv_content)
@@ -50,6 +58,8 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.progressbar)
     protected ProgressBar progressBar;
     private HistoryDao historyDao;
+    private Drawer result;
+    private AccountHeader headerResult;
 
     @Override
     protected int getContentView() {
@@ -59,14 +69,28 @@ public class MainActivity extends BaseActivity
     @Override
     protected void initView() {
         historyDao = AppContext.getInstance().getDaoSession().getHistoryDao();
-        initActionBar();
+        initToolBar();
+        initAccountHeader();
+        initDrawer();
         initWebView();
-        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void initAccountHeader() {
+        IProfile profile = new ProfileDrawerItem().withName("Fe_WebViewTool").withEmail("liang3472@gmail.com").withIcon(R.mipmap.ic_launcher);
+        headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withTranslucentStatusBar(true)
+                .withHeaderBackground(R.drawable.header)
+                .addProfiles(profile)
+                .build();
+    }
+
+    private void initToolBar() {
         btnGoTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!etUrl.getText().toString().startsWith("http")){
-                    etUrl.setText("http://"+etUrl.getText().toString());
+                if (!etUrl.getText().toString().startsWith("http")) {
+                    etUrl.setText("http://" + etUrl.getText().toString());
                 }
 
                 if (!TextUtils.isEmpty(etUrl.getText())) {
@@ -80,11 +104,55 @@ public class MainActivity extends BaseActivity
         });
     }
 
-    private void initActionBar() {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+    private void initDrawer() {
+        result = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withHasStableIds(true)
+                .withActionBarDrawerToggleAnimated(true)
+                .withDisplayBelowStatusBar(false)
+                .withItemAnimator(new AlphaCrossFadeAnimator())
+                .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
+                .withShowDrawerOnFirstLaunch(true)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName("扫码").withIcon(FontAwesome.Icon.faw_eye).withIdentifier(1).withSelectable(false),
+                        new PrimaryDrawerItem().withName("检测WebGl兼容性").withIcon(FontAwesome.Icon.faw_question).withIdentifier(2).withSelectable(false),
+                        new SwitchDrawerItem().withName("调试模式").withIcon(FontAwesome.Icon.faw_gamepad).withDescription("页面可调试").withDescriptionTextColor(Color.GRAY).withIdentifier(3).withCheckable(true).withChecked(SpUtils.isAutoFlush()).withOnCheckedChangeListener(new OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
+                                SpUtils.setDebugEnable(isChecked);
+                                wvContent.reload();
+                            }
+                        }).withChecked(SpUtils.isDebugEnable()),
+                        new SwitchDrawerItem().withName("自动刷新").withIcon(FontAwesome.Icon.faw_bullhorn).withDescription("实时检测代码变动").withDescriptionTextColor(Color.GRAY).withIdentifier(4).withCheckable(true).withChecked(SpUtils.isAutoFlush()).withOnCheckedChangeListener(new OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
+                                SpUtils.setAutoFlush(isChecked);
+                                wvContent.reload();
+                            }
+                        }),
+                        new PrimaryDrawerItem().withName("历史").withIcon(FontAwesome.Icon.faw_history).withIdentifier(5).withSelectable(false),
+                        new PrimaryDrawerItem().withName("清除缓存").withIcon(GoogleMaterial.Icon.gmd_disc_full).withIdentifier(6).withSelectable(false)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem != null) {
+                            if (drawerItem.getIdentifier() == 1) {
+                                startActivityForResult(new Intent(MainActivity.this, CaptureActivity.class), CaptureActivity.OPEN_QR);
+                            } else if (drawerItem.getIdentifier() == 2) {
+                                wvContent.loadUrl("file:///android_asset/testWebGL.html");
+                            } else if (drawerItem.getIdentifier() == 5) {
+                                startActivityForResult(new Intent(MainActivity.this, HistoryActivity.class), HistoryActivity.OPEN_HISTORY);
+                            } else if (drawerItem.getIdentifier() == 6) {
+                                Toast.makeText(MainActivity.this, "暂未开放", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        return false;
+                    }
+                })
+                .build();
     }
 
     private void initWebView() {
@@ -104,7 +172,15 @@ public class MainActivity extends BaseActivity
                 if (etUrl != null) {
                     etUrl.setText(url);
                 }
-                view.loadUrl(Utils.injectJsLib(Utils.getInjectErudaJs(), Utils.getInjectLiveJs()));
+                JsLib lib1 = null;
+                JsLib lib2 = null;
+                if(SpUtils.isDebugEnable()){
+                    lib1 = Utils.getInjectErudaJs();
+                }
+                if(SpUtils.isAutoFlush()){
+                    lib2 = Utils.getInjectLiveJs();
+                }
+                view.loadUrl(Utils.injectJsLib(lib1, lib2));
                 super.onPageFinished(view, url);
             }
 
@@ -129,7 +205,7 @@ public class MainActivity extends BaseActivity
         });
     }
 
-    private void goToUrl(String url){
+    private void goToUrl(String url) {
         wvContent.loadUrl(url);
         addHistory(url);
     }
@@ -137,28 +213,6 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.qr_scan) {
-            startActivityForResult(new Intent(this, CaptureActivity.class), CaptureActivity.OPEN_QR);
-        } else if (id == R.id.checkWebGL) {
-            wvContent.loadUrl("file:///android_asset/testWebGL.html");
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_history) {
-            startActivityForResult(new Intent(this, HistoryActivity.class), HistoryActivity.OPEN_HISTORY);
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -213,8 +267,8 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                drawer.closeDrawer(GravityCompat.START);
+            if (result != null && result.isDrawerOpen()) {
+                result.closeDrawer();
                 return false;
             }
             exitBy2Click(); //调用双击退出函数
