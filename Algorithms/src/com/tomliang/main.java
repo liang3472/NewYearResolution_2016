@@ -37,15 +37,35 @@ public class main {
 //		
 //		shellSort.sort(arr);
 		
-		MergeSort<Integer> merge = new MergeSort<Integer>() {
+//		TopMergeSort<Integer> merge = new TopMergeSort<Integer>() {
+//			
+//			@Override
+//			public boolean less(Integer t1, Integer t2) {
+//				return t1 < t2;
+//			}
+//		}; 
+//		
+//		merge.sort(arr);
+		
+//		BottomMergeSort<Integer> merge = new BottomMergeSort<Integer>() {
+//			
+//			@Override
+//			public boolean less(Integer t1, Integer t2) {
+//				return t1 < t2;
+//			}
+//		};
+//		
+//		merge.sort(arr);
+		
+		QuickSort<Integer> quick = new QuickSort<Integer>() {
 			
 			@Override
 			public boolean less(Integer t1, Integer t2) {
 				return t1 < t2;
 			}
-		}; 
+		};
 		
-		merge.sort(arr);
+		quick.sort(arr);
 		
 		for(int num : arr){
 			System.out.println(num);
