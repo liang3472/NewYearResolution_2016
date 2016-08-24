@@ -14,37 +14,68 @@ import com.tomliang.Utils;
 public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
 	
 	private int[] arr;
-	private int currIndex = 0;
-	private int temp;
+	private int size = 0;
+	private Integer min;
+	private int minIndex = 0;
 	
 	public NoOrderPriorityQueue(int size){
-		temp = size + 1;
 		arr = new int[size];
 	}
 
 	@Override
 	public void insert(Integer t) {
+		if(!contains(t)){
+			arr[size] = t;
+			size += 1;
+			updateMin();
+		}
+	}
+	
+	private boolean contains(Integer t){
+		if(size == 0) return false;
 		
+		for(int i=0; i < size; i++){
+			if(t == arr[i]) return true;
+		}
+		return false;
+	}
+	
+	public void updateMin(){
+		minIndex = 0;
+		min = arr[minIndex];
+		for(int i=0; i < size; i++){
+			if(arr[i] < min){
+				min = arr[i];
+				minIndex = i;
+			}
+		}
 	}
 
 	@Override
 	public Integer delMin() {
-		return null;
+		if(isEmpty()) return null;
+		for(int i=minIndex; i < size-1; i++){
+			arr[i] = arr[i+1];
+		}
+		arr[size-1] = 0;
+		size -= 1;
+		updateMin();
+		return min;
 	}
 
 	@Override
 	public Integer min() {
-		return null;
+		return min;
 	}
 
 	@Override
 	public int size() {
-		return currIndex + 1;
+		return size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return false;
+		return size == 0;
 	}
 
 	@Override
@@ -52,4 +83,9 @@ public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
 		return t1 < t2;
 	}
 
+	public void print(){
+		for(int i=0; i < size; i++){
+			System.out.println("---->"+arr[i]);
+		}
+	}
 }
