@@ -1,25 +1,35 @@
-package com.tomliang;
+package com.tomliang.sort;
+
 
 /**
  * 
  * @author lianghangbing
- * <p>自底向上原地归并排序</p>
+ * <p>自顶向下原地归并排序</p>
  * <p>排序原理:</p>
- * <p>不使用递归，将元素按两两归并，四四归并，八八归并...直到归并完成</p>
+ * <p>利用递归思想，将数组拆分成小单元，复制一个数组，将数组分为2部分，左右两部分进行比较，将比较后的元素插入原数组中</p>
+ * <p>时间复杂度: NlogN</p>
  * @param <T>
  */
-public abstract class BottomMergeSort<T> implements ISort<T> {
+public abstract class TopMergeSort<T> implements ISort<T> {
 
 	public void sort(T[] arr) {
 		if(arr == null){
 			throw new IllegalArgumentException("数组不能为空");
 		}
-		int N = arr.length;
-		for(int sz=1; sz<N; sz=sz+sz){
-			for(int lo=0; lo<N-sz; lo+=sz+sz){
-				merge(arr, lo, lo+sz-1, Math.min(lo+sz+sz-1, N-1));
-			}
+		sort(arr, 0, arr.length-1);
+	}
+	
+	private void sort(T[] arr, int start, int end){
+		if(start >= end){ // 如果分组达到最小单元，则停止分组
+			return;
 		}
+		int mid = start + (end-start)/2;
+		// 对左半部分分组
+		sort(arr, start, mid);
+		// 对右半部分分组
+		sort(arr, mid+1, end);
+		// 进行归并
+		merge(arr, start, mid, end);
 	}
 	
 	private void merge(T[] arr, int start, int mid, int end){

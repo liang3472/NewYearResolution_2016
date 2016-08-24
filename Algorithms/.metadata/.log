@@ -1,0 +1,13 @@
+!SESSION 2016-08-23 21:51:34.150 -----------------------------------------------
+eclipse.buildId=v22.3.0-887826
+java.version=1.8.0_40
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=zh_CN
+Framework arguments:  -product com.android.ide.eclipse.adt.package.product -keyring /Users/tomliang/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.product -keyring /Users/tomliang/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2016-08-23 21:52:10.813
+!MESSAGE System property http.nonProxyHosts has been set to local„ÄÅ169.254/16|*.local„ÄÅ169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.mylyn.tasks.ui 2 0 2016-08-23 21:52:18.481
+!MESSAGE No search provider was registed. Tasks search is not available.

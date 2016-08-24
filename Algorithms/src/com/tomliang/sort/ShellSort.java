@@ -1,4 +1,6 @@
-package com.tomliang;
+package com.tomliang.sort;
+
+import com.tomliang.Utils;
 
 /**
  * 

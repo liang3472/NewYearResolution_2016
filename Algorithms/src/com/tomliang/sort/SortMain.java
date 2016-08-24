@@ -1,6 +1,7 @@
-package com.tomliang;
+package com.tomliang.sort;
 
-public class main {
+
+public class SortMain {
 	public static void main(String[] args){
 		Integer[] arr = {2,5,1,4,3};
 		

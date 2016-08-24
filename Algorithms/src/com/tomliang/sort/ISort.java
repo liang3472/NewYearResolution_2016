@@ -1,4 +1,4 @@
-package com.tomliang;
+package com.tomliang.sort;
 
 public interface ISort<T> {
 	
