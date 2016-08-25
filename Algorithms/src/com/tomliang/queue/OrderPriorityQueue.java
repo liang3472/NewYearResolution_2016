@@ -1,5 +1,7 @@
 package com.tomliang.queue;
 
+import com.tomliang.Utils;
+
 /**
  * 
  * @author lianghangbing
@@ -11,34 +13,63 @@ package com.tomliang.queue;
  */
 public class OrderPriorityQueue implements IPriorityQueue<Integer> {
 
+	private Integer[] mArr;
+	private int mSize = 0;
+	public OrderPriorityQueue(int size){
+		mArr = new Integer[size];
+	}
+	
 	@Override
 	public void insert(Integer t) {
+		if(contains(t)) return;
+		if(mSize == 0){
+			mArr[0] = t;
+		}else{
+			mArr[mSize] = t;
+			for(int i=mSize; i>0 && mArr[i-1] < mArr[i]; i--){
+				Utils.exc(mArr, i-1, i);
+			}
+		}
+		mSize += 1;
+	}
+	
+	private boolean contains(Integer t){
+		if(mSize == 0) return false;
 		
+		for(int i=0; i < mSize; i++){
+			if(t == mArr[i]) return true;
+		}
+		return false;
 	}
 
 	@Override
 	public Integer delMin() {
-		return null;
+		if(isEmpty()) return null;
+		int min = mArr[mSize-1];
+		mArr[mSize-1] = 0;
+		mSize -= 1;
+		return min;
 	}
 
 	@Override
 	public Integer min() {
-		return null;
+		if(isEmpty()) return null;
+		return mArr[mSize-1];
 	}
 
 	@Override
 	public int size() {
-		return 0;
+		return mSize;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return false;
+		return mSize == 0;
 	}
 
-	@Override
-	public boolean less(Integer t1, Integer t2) {
-		return false;
+	public void print(){
+		for(int i=0; i < mSize; i++){
+			System.out.println("---->"+mArr[i]);
+		}
 	}
-
 }

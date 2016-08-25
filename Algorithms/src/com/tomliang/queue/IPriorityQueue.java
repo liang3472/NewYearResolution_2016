@@ -37,11 +37,4 @@ public interface IPriorityQueue<T> {
 	 */
 	boolean isEmpty();
 	
-	/**
-	 * 比较大小
-	 * @param t1
-	 * @param t2
-	 * @return : boolean
-	 */
-	boolean less(T t1, T t2);
 }

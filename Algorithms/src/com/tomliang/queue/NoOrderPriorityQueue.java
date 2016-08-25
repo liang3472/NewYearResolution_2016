@@ -1,7 +1,5 @@
 package com.tomliang.queue;
 
-import com.tomliang.Utils;
-
 /**
  * 
  * @author lianghangbing
@@ -13,40 +11,40 @@ import com.tomliang.Utils;
  */
 public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
 	
-	private int[] arr;
-	private int size = 0;
-	private Integer min;
-	private int minIndex = 0;
+	private int[] mArr;
+	private int mSize = 0;
+	private Integer mMin;
+	private int mMinIndex = 0;
 	
 	public NoOrderPriorityQueue(int size){
-		arr = new int[size];
+		mArr = new int[size];
 	}
 
 	@Override
 	public void insert(Integer t) {
 		if(!contains(t)){
-			arr[size] = t;
-			size += 1;
+			mArr[mSize] = t;
+			mSize += 1;
 			updateMin();
 		}
 	}
 	
 	private boolean contains(Integer t){
-		if(size == 0) return false;
+		if(mSize == 0) return false;
 		
-		for(int i=0; i < size; i++){
-			if(t == arr[i]) return true;
+		for(int i=0; i < mSize; i++){
+			if(t == mArr[i]) return true;
 		}
 		return false;
 	}
 	
 	public void updateMin(){
-		minIndex = 0;
-		min = arr[minIndex];
-		for(int i=0; i < size; i++){
-			if(arr[i] < min){
-				min = arr[i];
-				minIndex = i;
+		mMinIndex = 0;
+		mMin = mArr[mMinIndex];
+		for(int i=0; i < mSize; i++){
+			if(mArr[i] < mMin){
+				mMin = mArr[i];
+				mMinIndex = i;
 			}
 		}
 	}
@@ -54,38 +52,33 @@ public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
 	@Override
 	public Integer delMin() {
 		if(isEmpty()) return null;
-		for(int i=minIndex; i < size-1; i++){
-			arr[i] = arr[i+1];
+		for(int i=mMinIndex; i < mSize-1; i++){
+			mArr[i] = mArr[i+1];
 		}
-		arr[size-1] = 0;
-		size -= 1;
+		mArr[mSize-1] = 0;
+		mSize -= 1;
 		updateMin();
-		return min;
+		return mMin;
 	}
 
 	@Override
 	public Integer min() {
-		return min;
+		return mMin;
 	}
 
 	@Override
 	public int size() {
-		return size;
+		return mSize;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return size == 0;
-	}
-
-	@Override
-	public boolean less(Integer t1, Integer t2) {
-		return t1 < t2;
+		return mSize == 0;
 	}
 
 	public void print(){
-		for(int i=0; i < size; i++){
-			System.out.println("---->"+arr[i]);
+		for(int i=0; i < mSize; i++){
+			System.out.println("---->"+mArr[i]);
 		}
 	}
 }
