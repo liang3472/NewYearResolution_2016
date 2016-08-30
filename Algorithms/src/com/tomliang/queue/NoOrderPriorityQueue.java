@@ -29,6 +29,11 @@ public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
 		}
 	}
 	
+	/**
+	 * 判断是否包含该元素
+	 * @param t
+	 * @return
+	 */
 	private boolean contains(Integer t){
 		if(mSize == 0) return false;
 		
@@ -38,6 +43,9 @@ public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
 		return false;
 	}
 	
+	/**
+	 * 刷新最小元素
+	 */
 	public void updateMin(){
 		mMinIndex = 0;
 		mMin = mArr[mMinIndex];
@@ -76,6 +84,9 @@ public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
 		return mSize == 0;
 	}
 
+	/**
+	 * 打印队列
+	 */
 	public void print(){
 		for(int i=0; i < mSize; i++){
 			System.out.println("---->"+mArr[i]);

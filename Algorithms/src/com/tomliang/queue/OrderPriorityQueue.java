@@ -22,17 +22,18 @@ public class OrderPriorityQueue implements IPriorityQueue<Integer> {
 	@Override
 	public void insert(Integer t) {
 		if(contains(t)) return;
-		if(mSize == 0){
-			mArr[0] = t;
-		}else{
-			mArr[mSize] = t;
-			for(int i=mSize; i>0 && mArr[i-1] < mArr[i]; i--){
-				Utils.exc(mArr, i-1, i);
-			}
+		mArr[mSize] = t;
+		for(int i=mSize; i>0 && mArr[i-1] < mArr[i]; i--){
+			Utils.exc(mArr, i-1, i);
 		}
 		mSize += 1;
 	}
 	
+	/**
+	 * 判断是否包含该元素
+	 * @param t
+	 * @return
+	 */
 	private boolean contains(Integer t){
 		if(mSize == 0) return false;
 		
@@ -46,7 +47,7 @@ public class OrderPriorityQueue implements IPriorityQueue<Integer> {
 	public Integer delMin() {
 		if(isEmpty()) return null;
 		int min = mArr[mSize-1];
-		mArr[mSize-1] = 0;
+		mArr[mSize-1] = null;
 		mSize -= 1;
 		return min;
 	}
@@ -67,6 +68,9 @@ public class OrderPriorityQueue implements IPriorityQueue<Integer> {
 		return mSize == 0;
 	}
 
+	/**
+	 * 打印队列
+	 */
 	public void print(){
 		for(int i=0; i < mSize; i++){
 			System.out.println("---->"+mArr[i]);
