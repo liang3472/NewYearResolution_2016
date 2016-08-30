@@ -11,19 +11,19 @@ import com.tomliang.Utils;
  * <p>但是每次进行插入元素的时候都会对队列中的元素进行排序。保证最大和最小元素都会在队列边缘，便于查找。适用于频繁查找的场景</p>
  * @param <T>
  */
-public class OrderPriorityQueue implements IPriorityQueue<Integer> {
+public abstract class OrderPriorityQueue<T> implements IPriorityQueue<T> {
 
-	private Integer[] mArr;
+	private T[] mArr;
 	private int mSize = 0;
 	public OrderPriorityQueue(int size){
-		mArr = new Integer[size];
+		mArr = (T[]) new Object[size];
 	}
 	
 	@Override
-	public void insert(Integer t) {
+	public void insert(T t) {
 		if(contains(t)) return;
 		mArr[mSize] = t;
-		for(int i=mSize; i>0 && mArr[i-1] < mArr[i]; i--){
+		for(int i=mSize; i>0 && less(mArr[i-1], mArr[i]); i--){
 			Utils.exc(mArr, i-1, i);
 		}
 		mSize += 1;
@@ -34,7 +34,7 @@ public class OrderPriorityQueue implements IPriorityQueue<Integer> {
 	 * @param t
 	 * @return
 	 */
-	private boolean contains(Integer t){
+	private boolean contains(T t){
 		if(mSize == 0) return false;
 		
 		for(int i=0; i < mSize; i++){
@@ -44,16 +44,16 @@ public class OrderPriorityQueue implements IPriorityQueue<Integer> {
 	}
 
 	@Override
-	public Integer delMin() {
+	public T delMin() {
 		if(isEmpty()) return null;
-		int min = mArr[mSize-1];
+		T min = mArr[mSize-1];
 		mArr[mSize-1] = null;
 		mSize -= 1;
 		return min;
 	}
 
 	@Override
-	public Integer min() {
+	public T min() {
 		if(isEmpty()) return null;
 		return mArr[mSize-1];
 	}

@@ -9,19 +9,19 @@ package com.tomliang.queue;
  * <p>保证可以快速插入，适用于频繁插入操作的场景，但是取出操作效率不高。</p>
  * @param <T>
  */
-public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
+public abstract class NoOrderPriorityQueue<T> implements IPriorityQueue<T> {
 	
-	private int[] mArr;
+	private T[] mArr;
 	private int mSize = 0;
-	private Integer mMin;
+	private T mMin;
 	private int mMinIndex = 0;
 	
 	public NoOrderPriorityQueue(int size){
-		mArr = new int[size];
+		mArr = (T[]) new Object[size];
 	}
 
 	@Override
-	public void insert(Integer t) {
+	public void insert(T t) {
 		if(!contains(t)){
 			mArr[mSize] = t;
 			mSize += 1;
@@ -34,7 +34,7 @@ public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
 	 * @param t
 	 * @return
 	 */
-	private boolean contains(Integer t){
+	private boolean contains(T t){
 		if(mSize == 0) return false;
 		
 		for(int i=0; i < mSize; i++){
@@ -50,7 +50,7 @@ public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
 		mMinIndex = 0;
 		mMin = mArr[mMinIndex];
 		for(int i=0; i < mSize; i++){
-			if(mArr[i] < mMin){
+			if(less(mArr[i], mMin)){
 				mMin = mArr[i];
 				mMinIndex = i;
 			}
@@ -58,19 +58,19 @@ public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
 	}
 
 	@Override
-	public Integer delMin() {
+	public T delMin() {
 		if(isEmpty()) return null;
 		for(int i=mMinIndex; i < mSize-1; i++){
 			mArr[i] = mArr[i+1];
 		}
-		mArr[mSize-1] = 0;
+		mArr[mSize-1] = null;
 		mSize -= 1;
 		updateMin();
 		return mMin;
 	}
 
 	@Override
-	public Integer min() {
+	public T min() {
 		return mMin;
 	}
 
@@ -92,4 +92,5 @@ public class NoOrderPriorityQueue implements IPriorityQueue<Integer> {
 			System.out.println("---->"+mArr[i]);
 		}
 	}
+	
 }
