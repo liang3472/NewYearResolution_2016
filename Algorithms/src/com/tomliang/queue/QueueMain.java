@@ -16,16 +16,29 @@ public class QueueMain {
 //				pq.delMin();
 //			}
 //		}
-		OrderPriorityQueue<Integer> pq = new OrderPriorityQueue<Integer>(M+1) {
+//		OrderPriorityQueue<Integer> pq = new OrderPriorityQueue<Integer>(M+1) {
+//
+//			@Override
+//			public boolean less(Integer t1, Integer t2) {
+//				return t1 < t2;
+//			}
+//		};
+//		for(int i=0; i < arr.length; i++){
+//			pq.insert(arr[i]);
+//			if(pq.size() > M){
+//				pq.delMin();
+//			}
+//		}
+		BinaryHeapPriorityQueue<Integer> pq = new BinaryHeapPriorityQueue<Integer>(M+1) {
 
 			@Override
 			public boolean less(Integer t1, Integer t2) {
 				return t1 < t2;
 			}
 		};
-		for(int i=0; i < arr.length; i++){
+		for (int i = 0; i < arr.length; i++) {
 			pq.insert(arr[i]);
-			if(pq.size() > M){
+			if (pq.size() > M) {
 				pq.delMin();
 			}
 		}
